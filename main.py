@@ -2,6 +2,7 @@
 import data
 import process_image as pi
 from metrics import IOU, Dice_Score
+from plotting import barchart
 
 def mesure_segmentation(path_mask_cnn, path_mask_esp, extensao_cnn, extensao_eps, arquivo):
 
@@ -33,10 +34,15 @@ def mesure_segmentation(path_mask_cnn, path_mask_esp, extensao_cnn, extensao_eps
 
     resultado.close()
 
+def plot_graphics():
+    ""
+
 
 if __name__ == '__main__':
-    mesure_segmentation(path_mask_cnn='/home/josue/Área de Trabalho/Images/r1_mask_cnn/',
-                        path_mask_esp='/home/josue/Área de Trabalho/Images/r1_mask_esp/',
+    # drishtiGS_001.png
+    # drishtiGS_001_ODsegSoftmap.png
+    mesure_segmentation(path_mask_cnn='/home/josue/Área de Trabalho/Images/dri_mask_cnn/',
+                        path_mask_esp='/home/josue/Área de Trabalho/Images/dri_mask_esp/',
                         extensao_cnn='.png',
-                        extensao_eps='-exp5.bmp',
-                        arquivo='/home/josue/PycharmProjects/lib_evaluate_segm/files_csv/RIM-ONEv1.csv')
+                        extensao_eps='_ODsegSoftmap.png',
+                        arquivo='/home/josue/PycharmProjects/lib_evaluate_segm/files_csv/DRISHTI_GS.csv')
