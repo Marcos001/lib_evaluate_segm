@@ -1,8 +1,9 @@
 
-import data
+import data, os
 import process_image as pi
 from metrics import IOU, Dice_Score
 from plotting import barchart
+
 
 def mesure_segmentation(path_mask_cnn, path_mask_esp, extensao_cnn, extensao_eps, arquivo):
 
@@ -35,14 +36,36 @@ def mesure_segmentation(path_mask_cnn, path_mask_esp, extensao_cnn, extensao_eps
     resultado.close()
 
 def plot_graphics():
-    ""
+    file = open(os.getcwd()+'/files_csv/RIM-ONEv1.csv', 'r')
+    iou_rim, dice_rim = file.read().split('TOTAL,')[1].split(',')
+    print(iou_rim, 'and ', dice_rim)
+    file.close()
+
+    file = open(os.getcwd() + '/files_csv/DRISHTI_GS.csv', 'r')
+    iou_dr, dice_dr = file.read().split('TOTAL,')[1].split(',')
+    print(iou_dr, 'and ', dice_dr)
+
+    iou_rim = float(iou_rim)
+    iou_dr = float(iou_dr)
+    dice_dr = float(dice_dr)
+    dice_rim = float(dice_rim)
+
+    file.close()
+    all_dice = (dice_rim+dice_dr)/2
+    all_iou = ((iou_rim+iou_dr)/2)
+    MEAN_DICE = (dice_rim, dice_dr, all_dice)
+    MEAN_IOU = (iou_rim,iou_dr, all_iou)
+
+    barchart(MEAN_DICE, MEAN_IOU),
 
 
-if __name__ == '__main__':
-    # drishtiGS_001.png
-    # drishtiGS_001_ODsegSoftmap.png
+def caculate_IOU_DICE_SCORE():
     mesure_segmentation(path_mask_cnn='/home/josue/Área de Trabalho/Images/dri_mask_cnn/',
                         path_mask_esp='/home/josue/Área de Trabalho/Images/dri_mask_esp/',
                         extensao_cnn='.png',
                         extensao_eps='_ODsegSoftmap.png',
-                        arquivo='/home/josue/PycharmProjects/lib_evaluate_segm/files_csv/DRISHTI_GS.csv')
+                        arquivo=os.getcwd()+'/files_csv/DRISHTI_GS.csv')
+
+if __name__ == '__main__':
+    plot_graphics()
+

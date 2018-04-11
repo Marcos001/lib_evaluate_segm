@@ -24,15 +24,15 @@ def barchart(mean_dice_score, mean_iou):
                      color='r',
                      #yerr=std_sob,
                      error_kw=error_config,
-                     label='Overlay ',
-                     align='center') # sobreposição
+                     label='Dice Score ',
+                     align='center')
 
     IOU = plt.bar(index + bar_width, mean_iou, bar_width,
                      alpha=opacity,
                      color='y',
                      #yerr=std_sen,
                      error_kw=error_config,
-                     label='Sensitivity')
+                     label=' IOU ')
 
 
     def autolabel(rects):
@@ -59,3 +59,4 @@ def barchart(mean_dice_score, mean_iou):
     autolabel(IOU)
 
     plt.show()
+    plt.savefig('barchart.png')
