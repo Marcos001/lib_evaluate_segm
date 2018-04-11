@@ -18,10 +18,17 @@ def mesure_segmentation(path_mask_cnn, path_mask_esp, extensao_cnn, extensao_eps
         mask_cnn = pi.gray(i)
         mask_esp = pi.resize(pi.gray(path_mask_esp+pi.get_name(i)+extensao_eps), mask_cnn.shape[0], mask_cnn.shape[1])
 
-        resultado.write(' %s,%.2f,%.2f\n' %(pi.get_name(i),IOU(mask_cnn, mask_esp, 255),Dice_Score(mask_cnn, mask_esp, 255)))
+        iou = IOU(mask_cnn, mask_esp, 255)
+        dice_score = Dice_Score(mask_cnn, mask_esp, 255)
 
-        if index is 2:
-            resultado.close()
+        sum_dice_score += dice_score
+        sum_IOU += iou
+
+        resultado.write(' %s,%.2f,%.2f\n' %(pi.get_name(i), iou, dice_score))
+
+        #if index is (len(lista_img)-1):
+        if index is 3:
+            resultado.write(' TOTAL,%.2f,%.2f\n' % ( (sum_IOU)/(index+1), (sum_dice_score) / (index+1)))
             break
 
     resultado.close()
