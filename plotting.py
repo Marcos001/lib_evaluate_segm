@@ -21,7 +21,7 @@ def barchart(mean_dice_score, mean_iou):
 
     dice_score = plt.bar(index, mean_dice_score, bar_width,
                      alpha=opacity,
-                     color='r',
+                     color='g',
                      #yerr=std_sob,
                      error_kw=error_config,
                      label='Dice Score ',
@@ -29,7 +29,7 @@ def barchart(mean_dice_score, mean_iou):
 
     IOU = plt.bar(index + bar_width, mean_iou, bar_width,
                      alpha=opacity,
-                     color='y',
+                     color='r',
                      #yerr=std_sen,
                      error_kw=error_config,
                      label=' IOU ')
@@ -47,10 +47,10 @@ def barchart(mean_dice_score, mean_iou):
 
 
 
-    plt.xlabel('Segmentation Algorithms')
+    plt.xlabel(' Databases ')
     plt.ylabel(' Scores ')
-    plt.title(' Evaluete Segmentation ')
-    plt.xticks(index + bar_width / 1, ('RIM-ONEv1', 'DRISHTI_GS', 'MEAN'))
+    plt.title(' Targeting Evaluation ')
+    plt.xticks(index + bar_width / 1, ('RIM-ONEv1', 'DRISHTI_GS', 'Mean'))
     plt.legend() #
     plt.grid(True)
     plt.tight_layout()
