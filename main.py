@@ -14,6 +14,7 @@ def mesure_segmentation(path_mask_cnn, path_mask_esp, extensao_cnn, extensao_eps
     sum_IOU = 0
 
     for index, i in enumerate(lista_img):
+        print('index = ', index, len(lista_img))
 
         mask_cnn = pi.gray(i)
         mask_esp = pi.resize(pi.gray(path_mask_esp+pi.get_name(i)+extensao_eps), mask_cnn.shape[0], mask_cnn.shape[1])
@@ -26,8 +27,7 @@ def mesure_segmentation(path_mask_cnn, path_mask_esp, extensao_cnn, extensao_eps
 
         resultado.write(' %s,%.2f,%.2f\n' %(pi.get_name(i), iou, dice_score))
 
-        #if index is (len(lista_img)-1):
-        if index is 3:
+        if index is (len(lista_img)-1):
             resultado.write(' TOTAL,%.2f,%.2f\n' % ( (sum_IOU)/(index+1), (sum_dice_score) / (index+1)))
             break
 
