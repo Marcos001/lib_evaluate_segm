@@ -18,7 +18,7 @@ def mesure_segmentation(path_mask_cnn, path_mask_esp, extensao_cnn, extensao_eps
         mask_cnn = pi.gray(i)
         mask_esp = pi.resize(pi.gray(path_mask_esp+pi.get_name(i)+extensao_eps), mask_cnn.shape[0], mask_cnn.shape[1])
 
-        resultado.write(' %s,%.2f,%.f\n' %(pi.get_name(i),IOU(mask_cnn, mask_esp, 255),Dice_Score(mask_cnn, mask_esp, 255)))
+        resultado.write(' %s,%.2f,%.2f\n' %(pi.get_name(i),IOU(mask_cnn, mask_esp, 255),Dice_Score(mask_cnn, mask_esp, 255)))
 
         if index is 2:
             resultado.close()
