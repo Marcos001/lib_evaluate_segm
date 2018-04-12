@@ -1,7 +1,7 @@
 
 import data, os
 import process_image as pi
-from metrics import IOU, Dice_Score
+from metrics import IOU, Dice_Score, index_recall
 from plotting import barchart
 
 
@@ -10,10 +10,11 @@ def mesure_segmentation(path_mask_cnn, path_mask_esp, extensao_cnn, extensao_eps
     lista_img = data.get_list_images(path_mask_cnn, extensao_cnn)
 
     resultado = open(arquivo, 'w')
-    resultado.write(' Nome Imagem,IOU,Dice_Score\n')
+    resultado.write(' Nome Imagem,IOU,Dice_Score,Recall\n')
 
     sum_dice_score = 0
     sum_IOU = 0
+    sum_recall = 0
 
     for index, i in enumerate(lista_img):
         print('index = ', index, len(lista_img))
@@ -23,15 +24,16 @@ def mesure_segmentation(path_mask_cnn, path_mask_esp, extensao_cnn, extensao_eps
 
         iou = IOU(mask_cnn, mask_esp, 255)
         dice_score = Dice_Score(mask_cnn, mask_esp, 255)
+        recall = index_recall(mask_esp, mask_cnn)
 
         sum_dice_score += dice_score
         sum_IOU += iou
+        sum_recall += recall
 
-        resultado.write(' %s,%.2f,%.2f\n' %(pi.get_name(i), iou, dice_score))
+        resultado.write(' %s,%.2f,%.2f,%.2f\n' %(pi.get_name(i), iou, dice_score,recall))
 
         if index is (len(lista_img)-1):
-            resultado.write(' TOTAL,%.2f,%.2f\n' % ( (sum_IOU)/(index+1), (sum_dice_score) / (index+1)))
-            break
+            resultado.write(' TOTAL,%.2f,%.2f,%.2f\n' % ( (sum_IOU)/(index+1), (sum_dice_score) / (index+1), (sum_recall) / (index+1)))
 
     resultado.close()
 
@@ -60,6 +62,13 @@ def plot_graphics():
 
 
 def caculate_IOU_DICE_SCORE():
+
+    mesure_segmentation(path_mask_cnn='/home/josue/Área de Trabalho/Images/r1_mask_cnn/',
+                        path_mask_esp='/home/josue/Área de Trabalho/Images/r1_mask_esp/',
+                        extensao_cnn='.png',
+                        extensao_eps='-exp5.bmp',
+                        arquivo=os.getcwd()+'/files_csv/RIM-ONEv1.csv')
+
     mesure_segmentation(path_mask_cnn='/home/josue/Área de Trabalho/Images/dri_mask_cnn/',
                         path_mask_esp='/home/josue/Área de Trabalho/Images/dri_mask_esp/',
                         extensao_cnn='.png',
@@ -67,5 +76,6 @@ def caculate_IOU_DICE_SCORE():
                         arquivo=os.getcwd()+'/files_csv/DRISHTI_GS.csv')
 
 if __name__ == '__main__':
-    plot_graphics()
+    caculate_IOU_DICE_SCORE()
+    #plot_graphics()
 

@@ -1,4 +1,32 @@
 
+
+def index_estatitics(img, mask):
+        tp = 0
+        tn = 0
+        fp = 0
+        fn = 0
+        for i in range(mask.shape[0]):
+            for j in range(mask.shape[1]):
+                """"""
+                if mask[i][j] == 255:
+                    if mask[i][j] == img[i][j]:
+                        tp += 1
+                    if mask[i][j] != img[i][j]:
+                        fn += 1
+                if mask[i][j] != 255:
+                    if mask[i][j] == img[i][j]:
+                        tn += 1
+                    if mask[i][j] != img[i][j]:
+                        fp += 1
+        return tp, tn, fp, fn
+
+def recall(tp, fn):
+    return (tp) / (tp+fn)
+
+def index_recall(img, mask):
+    tp, tn, fp, fn = index_estatitics(img, mask)
+    return (tp) / (tp+fn)
+
 def Intersection(imagem_a, imagem_b, value):
     """
     :param imagem_a: predicted output map
