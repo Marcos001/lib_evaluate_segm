@@ -60,7 +60,7 @@ def barchart(mean_dice_score, mean_iou, mean_recall):
     #plt.xlabel(' Databases ')
     plt.ylabel(' Scores ')
     #plt.title(' Targeting Evaluation ')
-    plt.xticks(index + bar_width / 1, ('RIM-ONEv1', 'DRISHTI_GS', 'Mean', " Recall "))
+    plt.xticks(index + bar_width / 1, ('RIM-ONEv1', 'DRISHTI_GS', ' Average ', " Recall "))
     plt.legend(loc=4) #
     plt.grid(True)
     plt.tight_layout()
