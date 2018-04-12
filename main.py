@@ -38,27 +38,32 @@ def mesure_segmentation(path_mask_cnn, path_mask_esp, extensao_cnn, extensao_eps
     resultado.close()
 
 def plot_graphics():
+
     file = open(os.getcwd()+'/files_csv/RIM-ONEv1.csv', 'r')
-    iou_rim, dice_rim = file.read().split('TOTAL,')[1].split(',')
-    print(iou_rim, 'and ', dice_rim)
+    iou_rim, dice_rim, recall_rim = file.read().split('TOTAL,')[1].split(',')
     file.close()
 
     file = open(os.getcwd() + '/files_csv/DRISHTI_GS.csv', 'r')
-    iou_dr, dice_dr = file.read().split('TOTAL,')[1].split(',')
-    print(iou_dr, 'and ', dice_dr)
+    iou_dr, dice_dr, recall_dr = file.read().split('TOTAL,')[1].split(',')
+    file.close()
 
     iou_rim = float(iou_rim)
     iou_dr = float(iou_dr)
     dice_dr = float(dice_dr)
     dice_rim = float(dice_rim)
+    recall_rim = float(recall_rim)
+    recall_dr = float(recall_dr)
 
-    file.close()
-    all_dice = (dice_rim+dice_dr)/2
-    all_iou = ((iou_rim+iou_dr)/2)
+    all_dice = float('%.2f' %((dice_rim+dice_dr)/2))
+    all_iou = float('%.2f' %((iou_rim+iou_dr)/2))
+    all_recall = float('%.2f' %((recall_dr+recall_rim) / 2))
+
+
     MEAN_DICE = (dice_rim, dice_dr, all_dice)
     MEAN_IOU = (iou_rim,iou_dr, all_iou)
+    MEAN_RECALL = (recall_rim, recall_dr, all_recall)
 
-    barchart(MEAN_DICE, MEAN_IOU),
+    barchart(MEAN_DICE, MEAN_IOU, MEAN_RECALL)
 
 
 def caculate_IOU_DICE_SCORE():
@@ -76,6 +81,6 @@ def caculate_IOU_DICE_SCORE():
                         arquivo=os.getcwd()+'/files_csv/DRISHTI_GS.csv')
 
 if __name__ == '__main__':
-    caculate_IOU_DICE_SCORE()
-    #plot_graphics()
+    #caculate_IOU_DICE_SCORE()
+    plot_graphics()
 
